@@ -5,11 +5,12 @@
             class="el-menu-demo"
             mode="horizontal"
             @click="handleSelect"
-            background-color="#545c64"
+            background-color="black"
             text-color="#fff"
             active-text-color="#ffd04b">
             <el-menu-item index="home" @click="handleHome">Home</el-menu-item>
-            <el-menu-item index="myApp" @click="handleFrom">Form</el-menu-item>
+            <el-menu-item index="Students" @click="handleFrom">Student</el-menu-item>
+            <el-menu-item index="Products" @click="handleProduct">Product</el-menu-item>
         </el-menu>
         <router-view></router-view>
     </div>
@@ -23,6 +24,8 @@ export default {
       };
   },
 
+
+
   methods:{
       handleSelect(key, keyPath){
           //console.log(key)
@@ -32,7 +35,10 @@ export default {
           this.$router.push({name: 'home'});
       },
       handleFrom(){
-          this.$router.push({name: 'myApp'});
+          this.$router.push({name: 'Students'});
+      },
+      handleProduct(){
+          this.$router.push({name: 'Products'});
       }
   }
 }
