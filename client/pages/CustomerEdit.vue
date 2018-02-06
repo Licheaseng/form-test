@@ -4,53 +4,53 @@
         <el-row :gutter="20">
             <el-col :span="15" :offset="5">
                 <br><br>
-                <h1>Edit Student Information</h1>
-        <el-form v-loading="loading" :model="form" :rules="rules" ref="form" label-width="120px">
-            <el-row :gutter="10">
-                <el-col :span="12">
-                    <el-form-item label="Student Name" prop="studentName">
-                        <el-input v-model="form.studentName"></el-input>
-                    </el-form-item>
-                    <el-form-item label="Gender" prop="gender">
-                        <el-select v-model="form.gender" style="width: 100%">
-                            <el-option
-                                    v-for="item in gender"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            >
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="DOB" required>
-                        <el-form-item prop="dob">
-                             <el-date-picker type="date" placeholder="Pick a DOB" v-model="form.dob" style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                    </el-form-item>
-                    <el-form-item label="Address" prop="address">
-                        <el-select v-model="form.address" style="width: 100%">
-                            <el-option
-                                    v-for="item in address"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            >
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="Phone Number" prop="phonenumber">
-                        <el-input v-model="form.phonenumber"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="handleSave">Save</el-button>
-                        <el-button @click="handleCancel">Cancel</el-button>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-        </el-form>
-        </el-col>
+                <h1>Edit Customer Information</h1>
+                <el-form v-loading="loading" :model="form" :rules="rules" ref="form" label-width="120px">
+                    <el-row :gutter="10">
+                        <el-col :span="12">
+                            <el-form-item label="Name" prop="customerName">
+                                <el-input v-model="form.customerName"></el-input>
+                            </el-form-item>
+                            <el-form-item label="Gender" prop="gender">
+                                <el-select v-model="form.gender" style="width: 100%">
+                                    <el-option
+                                            v-for="item in gender"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                    >
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="DOB" required>
+                                <el-form-item prop="dob">
+                                    <el-date-picker type="date" placeholder="Pick a DOB" v-model="form.dob" style="width: 100%;"></el-date-picker>
+                                </el-form-item>
+                            </el-form-item>
+                            <el-form-item label="Address" prop="address">
+                                <el-select v-model="form.address" style="width: 100%">
+                                    <el-option
+                                            v-for="item in address"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                    >
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="Email" prop="email">
+                                <el-input v-model="form.email"></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="handleSave">Save</el-button>
+                                <el-button @click="handleCancel">Cancel</el-button>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </el-col>
         </el-row>
     </div>
 </template>
@@ -58,9 +58,9 @@
 <script>
 
     import _ from 'lodash';
-    import {findStudents, updateStudent} from '../both/students/methods';
+    import {findCustomers, updateCustomer} from '../../both/customers/methods';
     export default {
-        name: 'StudentNew',
+        name: 'CustomerNew',
         data() {
             return {
                 loading: false,
@@ -80,7 +80,7 @@
                     gender: '',
                     dob: '',
                     address: '',
-                    phonenumber: '',
+                    email: '',
                 },
                 rules: {
                     studentName: [
@@ -99,21 +99,21 @@
                             trigger: "blur"
                         }
                     ],
-                    phonenumber: [
+                    email: [
                         {required: true, message: 'Please Input Phone Number'}
                     ],
                 }
             };
         },
         mounted() {
-            this.getStudents();
+            this.getCustomers();
         },
         methods: {
-            getStudents() {
+            getCustomers() {
                 this.loading = true;
 
-                findStudents.callPromise({}, {sort: {code: 1}}).then((result) => {
-                    this.StudentOpts = result;
+                findCustomers.callPromise({}, {sort: {code: 1}}).then((result) => {
+                    this.CustomerOpts = result;
 
                     // Find for update
                     const _id = this.$route.params._id;
@@ -131,7 +131,7 @@
                     if (valid) {
                         this.loading = true;
 
-                        updateStudent.callPromise(this.form).then((result) => {
+                        updateCustomer.callPromise(this.form).then((result) => {
                             if (result) {
                                 this.loading = false;
                                 this.$notify({
@@ -155,7 +155,7 @@
                 this.$refs['form'].resetFields();
             },
             handleCancel() {
-                this.$router.push({name: 'Students'});
+                this.$router.push({name: 'Customers'});
             },
         }
     };

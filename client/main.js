@@ -14,13 +14,26 @@ locale.use(lang)
 
 import AppLayout from './AppLayout.vue';
 import home from './home.vue';
-import Students from './Students.vue';
-import StudentNew from './StudentNew.vue';
-import StudentEdit from './StudentEdit.vue';
-import Products from './Products.vue';
-import ProductNew from './ProductNew.vue';
-import ProductEdit from './ProductEdit.vue';
 
+// Student
+import Students from './pages/Students.vue';
+import StudentNew from './pages/StudentNew.vue';
+import StudentEdit from './pages/StudentEdit.vue';
+
+// Product
+import Products from './pages/Products.vue';
+import ProductNew from './pages/ProductNew.vue';
+import ProductEdit from './pages/ProductEdit.vue';
+
+// Sales
+import Sales from './pages/Sales.vue';
+import SaleNew from './pages/SaleNew.vue';
+import SaleEdit from './pages/SaleEdit.vue';
+
+// Customers
+import Customers from './pages/Customers.vue';
+import CustomerNew from './pages/CustomerNew.vue';
+import CustomerEdit from './pages/CustomerEdit.vue';
 
 const router = new VueRouter({
   mode: 'history',
@@ -66,6 +79,41 @@ const router = new VueRouter({
       params: ['_id'],
       component: ProductEdit,
     },
+
+    // sales
+    {
+      path: '/Sales',
+      name: 'Sales',
+      component: Sales,
+    },
+    {
+      path: '/SaleNew',
+      name: 'SaleNew',
+      component: SaleNew,
+    },
+    {
+      path: ':_id/SaleEdit',
+      name: 'SaleEdit',
+      params: ['_id'],
+      component: SaleEdit,
+    },
+
+    // customer
+    {
+      path: '/Customers',
+      name: 'Customers',
+      component: Customers
+    },
+    {
+      path: '/CustomerNew',
+      name: 'CustomerNew',
+      component: CustomerNew
+    },
+    {
+      path: ':_id/CustomerEdit',
+      name: 'CustomerEdit',
+      component: CustomerEdit,
+    }
   ]
 });
 

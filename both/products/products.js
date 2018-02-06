@@ -20,10 +20,10 @@ Products.schema = new SimpleSchema({
         type: Number,
         optional: true
     },
-    amount:{
-        type: Number,
-        optional: true
-    }
+    categoryName:{
+        type: String,
+        allowedValues: ['Drink', 'Beer' , 'Wine' , 'Juice']
+    },
 });
 
 Products.attachSchema(Products.schema);

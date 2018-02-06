@@ -7,9 +7,9 @@
             <el-row :gutter="20">
                 <el-col :span="15" :offset="5">
                     <br><br>
-                <h1>Student Form</h1>
+                <h1>Products Form</h1>
             <!--<div class="line-spacing">-->
-            <el-button type="primary" icon="el-icon-plus" @click="handleNew">New Student</el-button>
+            <el-button type="primary" icon="el-icon-plus" @click="handleNew">New Product</el-button>
             <!--</div>-->
              <br><br>
             <el-table
@@ -17,7 +17,7 @@
                     :data="tableData"
                     :default-sort="{prop: 'code', order: 'ascending'}"
                     style="width: 100%"
-                    height="440">
+                    height="300">
                 <!-- <el-table-column
                         prop="_id"
                         label="Code"
@@ -25,14 +25,9 @@
                 >
                 </el-table-column> -->
                 <el-table-column
-                        prop="studentName"
+                        prop="productName"
                         label="Name"
                         sortable
-                >
-                </el-table-column>
-                <el-table-column
-                        prop="gender"
-                        label="Gender"
                 >
                 </el-table-column>
                 <el-table-column
@@ -42,20 +37,26 @@
                 >
                 </el-table-column>
                 <el-table-column
-                        prop="address"
-                        label="Address"
+                        prop="qty"
+                        label="Quantities"
                 >
                 </el-table-column>
                 <el-table-column
-                        prop="phonenumber"
-                        label="phonenumber"
+                        prop="price"
+                        :formatter="priceFormatter"
+                        label="Price"
+                >
+                </el-table-column>
+                <el-table-column
+                        prop="categoryName"
+                        label="CategoryName"
                 >
                 </el-table-column>
                 <el-table-column
                         label="Action"
                         width="70">
                     <template slot-scope="scope">
-                       <el-dropdown trigger="click" @command="handleCommand">
+                        <el-dropdown trigger="click" @command="handleCommand">
                             <span class="el-dropdown-link">
                                 <i class="fa fa-bars"></i>
                             </span>
@@ -75,10 +76,10 @@
 </template>
 
 <script>
-    import {findStudents, removeStudent} from '../both/students/methods';
+    import {findProducts, removeProduct} from '../../both/products/methods';
 
     export default {
-        name: 'Students',
+        name: 'Products',
         data() {
             return {
                 loading: false,
@@ -91,7 +92,7 @@
         methods: {
             getData() {
                 this.loading = true;
-                findStudents.callPromise().then((result) => {
+                findProducts.callPromise().then((result) => {
                     this.tableData = result;
                     this.loading = false;
                 }).catch((error) => {
@@ -100,13 +101,13 @@
             },
             handleNew() {
                 location.reload();
-                this.$router.push({name: 'StudentNew'});
+                this.$router.push({name: 'ProductNew'});
             },
             handleCommand(command) {
                 this[command.action](command.row);
             },
             edit(row) {
-                this.$router.push({name: 'StudentEdit', params: {_id: row._id}});
+                this.$router.push({name: 'ProductEdit', params: {_id: row._id}});
             },
             delete(row) {
                 this.$confirm('This will permanently delete. Continue?', 'Warning',
@@ -114,7 +115,7 @@
                         type: 'warning',
                     }
                 ).then(() => {
-                    removeStudent.callPromise({_id: row._id}).then((result) => {
+                    removeProduct.callPromise({_id: row._id}).then((result) => {
                         this.$notify({
                             type: 'success',
                             position: 'bottom-right',
@@ -135,6 +136,8 @@
                     });
                 });
             },
+
+            // date format
             dateFormatter: (row,column) => {
             var date = row[column.property];
                 if(date == undefined){
@@ -142,28 +145,46 @@
                 }
                 return moment(date).format("LL");
             },
+
+            // format price $
+            priceFormatter: (row,column) => {
+            var prices = row[column.property];
+                if(prices == undefined){
+                    return "";
+                }
+                return numeral(prices).format("$0,0");
+            },
+
+            // format Amount $
+            // amountFormatter: (row,column) => {
+            // var amounts = row[column.property];
+            //     if(amounts == undefined){
+            //         return "";
+            //     }
+            //     return numeral(amounts).format("$0.00");
+            // },
         }
     }
 </script>
 
-<style lang="scss" scoped>
-  .el-dropdown-link {
-    cursor: pointer;
-    color: #409EFF;
-    }
+<style  lang="scss" scoped>
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409EFF;
+}
 
-    .el-icon-caret-bottom {
-    font-size: 12px;
-    }
+.el-icon-caret-bottom {
+  font-size: 12px;
+}
 
-    .icon-white {
-    color: white;
-    }
+.icon-white {
+  color: white;
+}
 
-    .header-item-margin {
-    margin-left: 15px;
-    }
-    .el-icon-arrow-down {
+.header-item-margin {
+  margin-left: 15px;
+}
+.el-icon-arrow-down {
     font-size: 12px;
   }
 </style>
