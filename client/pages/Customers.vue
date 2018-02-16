@@ -7,7 +7,7 @@
             <el-row :gutter="20">
                 <el-col :span="15" :offset="5">
                     <br><br>
-                <h1>Customer Form</h1>
+                <h1>Customers Form</h1>
             <!--<div class="line-spacing">-->
             <el-button type="primary" icon="el-icon-plus" @click="handleNew">New Customer</el-button>
             <!--</div>-->

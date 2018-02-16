@@ -78,6 +78,7 @@ export const findSaleDoc = new ValidatedMethod({
     }
 })
 
+
 // Find One
 export const findOneSale = new ValidatedMethod({
     name: 'findOneSale',
